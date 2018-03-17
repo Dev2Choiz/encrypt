@@ -1,0 +1,19 @@
+dev_encrypt.annotation:
+    resource: "@DevEncryptBundle/Controller/"
+    type:     annotation
+
+dev_encrypt.default.stream:
+    path:     /stream
+    defaults: { _controller: DevEncryptBundle:Default:stream }
+
+dev_encrypt.default.direct_stream:
+    path:     /directstream
+    defaults: { _controller: DevEncryptBundle:Default:directStream }
+
+dev_encrypt.upload.upload:
+    path:     /upload/{task}/{idProcess}/{mode}
+    defaults: { _controller: DevEncryptBundle:Task:upload }
+
+dev_encrypt.thread.run:
+    path:     /thread/run/{task}/{idProcess}/{clientIp}
+    defaults: { _controller: DevEncryptBundle:Thread:run }

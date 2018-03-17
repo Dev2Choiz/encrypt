@@ -1,0 +1,8 @@
+snc_redis:
+    clients:
+        uploader:
+            type: predis
+            alias: uploader
+            #dsn: "redis://%redis_user%@%redis_host%"
+            dsn: "redis://%redis_host%"
+            logging: true

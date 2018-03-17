@@ -1,0 +1,7 @@
+parameters:
+
+    devCacheMonitoring.memcache.host: "%memcached_host%"
+    devCacheMonitoring.memcache.port: 11211
+
+    devCacheMonitoring.memcached.host: "%memcached_host%"
+    devCacheMonitoring.memcached.port: 11211

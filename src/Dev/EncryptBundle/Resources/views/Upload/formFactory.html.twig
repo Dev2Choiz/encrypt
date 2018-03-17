@@ -1,0 +1,17 @@
+<div id="encryptFormWrapper" class="encryptFormWrapper">
+
+    <div class="formContent">
+        {{ form_start(form) }}
+            {% include('@DevEncrypt/Upload/partial/templateForm/' ~ taskType ~ '.html.twig') %}
+            {{ form_widget(form._token) }}
+            <div class="row text-center divSubmmit">
+                <input type="submit" value="Envoyer" class="btn btn-primary col-md-offset-3 col-md-6 bg-primary-color">
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="progressionContent" width="400px">
+        <div class="downloadLink"></div>
+        <div class="uploadStatus border-primary-color" style="border: 2px solid; min-width: 400px; min-height: 30px;"></div>
+    </div>
+</div>

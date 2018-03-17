@@ -1,0 +1,94 @@
+<html>
+<head>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1 class="text-center">Cache</h1>
+
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr>
+                <th colspan="2" class="text-center">
+                    <a class="btn btn-link" data-toggle="collapse" href="#cacheContent" aria-expanded="false" aria-controls="cacheContent">
+                        Contenu cache
+                        <span class="badge">{{ cacheContent | length }}</span>
+                        <a href="{{ path('dev_cache_monitoring.flushall', {'cacheName': cacheName}) }}">
+                            <span class="badge">flushAll</span>
+                        </a>
+
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="cacheContent" class="collapse in">
+            {% set cmpt = 1 %}
+            {% for key, content in cacheContent %}
+
+                <tr>
+                    <td style="width: 300px; max-width: 300px;">
+                        <div style="overflow: auto;">{{ key }}</div>
+                    </td>
+                    <td>
+                        <span class="badge" data-toggle="modal" data-target="#cacheContentModal{{ cmpt }}">dump</span>
+
+                        {% if content is object %}
+                            <span class="badge" data-toggle="modal" data-target="#cacheContentModal{{ cmpt }}">Object</span>
+                        {% elseif content is array %}
+                            <span class="badge" data-toggle="modal" data-target="#cacheContentModal{{ cmpt }}">Array</span>
+                        {% elseif content is string %}
+                            <span class="badge" data-toggle="modal" data-target="#cacheContentModal{{ cmpt }}">String</span>
+                            <br>{{ content[:200] }}
+                        {% elseif content is integer %}
+                            <span class="badge" data-toggle="modal" data-target="#cacheContentModal{{ cmpt }}">Integer</span>
+                            <br>{{ content[:200] }}
+                        {% endif %}
+
+                        {# Modal du dump #}
+                        <div class="modal fade" id="cacheContentModal{{ cmpt }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ cmpt }}">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel{{ cmpt }}" style="overflow-x: scroll;">{{ key }}</h4>
+                                    </div>
+                                    <div class="modal-body">{{ dump(content) }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                {% set cmpt = cmpt + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2" class="text-center">
+                        <a class="btn btn-link" data-toggle="collapse" href="#cacheStat" aria-expanded="false" aria-controls="cacheStat">Statistiques</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="cacheStat" class="collapse">
+            {% for key, value in stats %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</body>
+</html>
+

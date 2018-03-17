@@ -1,0 +1,78 @@
+version: '3'
+
+networks:
+  net_encrypt:
+    driver: bridge
+
+services:
+
+  container_encrypt:
+    build:
+      context: .
+      dockerfile: docker/encrypt/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html/encrypt
+    environment:
+      CONTAINER_MYSQL_HOST: "container_mysql"
+      CONTAINER_MYSQL_PORT: "3306"
+      CONTAINER_MYSQL_USER: "root"
+      CONTAINER_MYSQL_PASSWORD: "secret"
+      # Memcached
+      CONTAINER_MEMCACHED_HOST: "container_memcached"
+      # Redis
+      CONTAINER_REDIS_HOST: "container_redis"
+      CONTAINER_REDIS_USER: "root"
+      # RabbitMq
+      CONTAINER_RABBITMQ_HOST: "container_rabbitmq"
+      CONTAINER_RABBITMQ_USER: "encrypt"
+      CONTAINER_RABBITMQ_PASS: "secret"
+      CONTAINER_RABBITMQ_VHOST: "encrypt"
+      #xdebug
+      PHP_IDE_CONFIG: "serverName=192.168.0.42"
+      XDEBUG_CONFIG: "remote_host=192.168.0.15 idekey=PHPSTORM"
+    networks:
+      - net_encrypt
+    depends_on:
+      - container_mysql
+      - container_memcached
+      - container_redis
+      - container_rabbitmq
+
+  container_mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=encrypt
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - ./docker/mysql/etc:/docker-entrypoint-initdb.d
+    networks:
+      - net_encrypt
+
+  container_memcached:
+    image: memcached
+    networks:
+      - net_encrypt
+
+  container_rabbitmq:
+    image: rabbitmq:3.6.1-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=encrypt
+      - RABBITMQ_DEFAULT_PASS=secret
+      - RABBITMQ_DEFAULT_VHOST=encrypt
+    networks:
+      - net_encrypt
+
+  container_redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - net_encrypt

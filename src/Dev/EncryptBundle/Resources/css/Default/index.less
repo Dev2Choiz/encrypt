@@ -1,0 +1,132 @@
+
+
+.transition(@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
+.hidden {
+    display: none;
+}
+
+.hiddenTransition {
+  display: none;
+  .transition(display 5s)
+}
+
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+#content {
+    width: 600px;
+    margin-top: 100px;
+    border-width: 5px;
+    border-style: dashed;
+}
+#content:before {
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from {}
+  75% {
+    transform: rotateZ(360deg);
+  }
+  to {}
+}
+
+.clear {
+    clear: both;
+}
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+#progressBarContent {
+    width: 100%;
+    height: 10px;
+    border: 0;
+    margin: 0;
+    z-index: 100;
+    .progress{
+        margin: 0;
+        height: 10px;
+        background-color: #DDDDFF;
+    }
+    #defaultProgress {
+        height: 10px;
+        //background-color: @dev-primary-color;
+    }
+}
+
+.progressBarUpload {
+    background-color: @dev-encode-color;
+}
+
+#btnLogin, #btnPanelUser {
+    margin: -3px 0 70px 0;
+    position: absolute;
+    right: 0;
+    display: none;
+}
+
+.bg-primary-color {
+    background-color: @dev-primary-color !important;
+    .transition(background-color 2s);
+}
+.bg-intermediate-color {
+    background-color: @dev-intermediate-color !important;
+    .transition(background-color 1s);
+}
+.bg-encode-color {
+    background-color: @dev-encode-color !important;
+    .transition(background-color 2s);
+}
+
+.border-primary-color {
+    border-color: @dev-primary-color !important;
+    .transition(border-color 2s);
+}
+.border-intermediate-color {
+    border-color: @dev-intermediate-color !important;
+    .transition(border-color 1s);
+}
+.border-encode-color {
+    border-color: @dev-encode-color !important;
+    .transition(border-color 2s);
+}
+
+.uploadStatus {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#previewSize {
+  width: 250px;
+  color: #FFF;
+  clear: both;
+  margin: 0 auto;
+  text-align: center;
+}

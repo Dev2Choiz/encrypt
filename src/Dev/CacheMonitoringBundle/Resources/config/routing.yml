@@ -1,0 +1,3 @@
+dev_cache_monitoring:
+    resource: "@DevCacheMonitoringBundle/Controller"
+    type:     annotation

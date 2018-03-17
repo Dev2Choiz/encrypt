@@ -1,0 +1,26 @@
+login:
+    path:   /login
+    defaults:  { _controller: DevSecurityBundle:Security:login }
+
+login_check:
+    path:   /login_check
+
+logout:
+    path:   /logout
+
+dev_security.user.inscription:
+    path:   /user/inscription
+    defaults:  { _controller: DevSecurityBundle:User:inscription }
+
+dev_security.user.edit:
+    path:   /user/edit
+    defaults:  { _controller: DevSecurityBundle:User:edit }
+
+dev_security.user.loginForm:
+    path:   /user/loginForm
+    defaults:  { _controller: DevSecurityBundle:User:loginForm }
+
+dev_security.user.userPanel:
+    path:   /user/userPanel
+    defaults:  { _controller: DevSecurityBundle:User:userPanel }
+

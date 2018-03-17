@@ -1,0 +1,17 @@
+services:
+
+    dev_encrypt.listener.controller_pre_executable:
+        class: Dev\EncryptBundle\Listener\ControllerPreExecutableListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+        calls:
+            - [setSvcContainer, ['@service_container']]
+
+    dev_encrypt.listener.controller_js_config:
+        class: Dev\EncryptBundle\Listener\ControllerJsConfigListener
+        calls:
+            - [setSvcContainer, ['@service_container']]
+            - [setVariablesCss,  [ '%variablesCss%' ]]
+            - [setBehindTag,  [ 'head' ]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

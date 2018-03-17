@@ -1,0 +1,28 @@
+services:
+
+    dev_encrypt.service.logger:
+        class: Dev\EncryptBundle\Service\Logger
+        calls:
+            - [setLogger, ['@logger']]
+            - [setWorkerLogger, ['@monolog.logger.worker']]
+        tags:
+            - { name: monolog.logger, channel: main }
+            - { name: monolog.logger, channel: worker }
+
+    dev_encrypt.service.rabbitmq.encode_producer:
+        parent: 'old_sound_rabbit_mq.encrypt_client_producer'
+        class: Dev\EncryptBundle\Service\RabbitMQ\EncodeProducer
+
+    dev_encrypt.service.rabbitmq.abstract_worker:
+        abstract: true
+        class: Dev\EncryptBundle\Service\RabbitMQ\Worker
+        calls:
+            - [setLogger, ['@monolog.logger.worker']]
+        tags:
+            - { name: monolog.logger, channel: worker }
+
+    dev_encrypt.service.rabbitmq.encode_consumer:
+        parent: dev_encrypt.service.rabbitmq.abstract_worker
+        class: Dev\EncryptBundle\Service\RabbitMQ\EncodeConsumer
+        calls:
+            - [setSvcEncodeManager, ['@dev_encoder.service.encrypt_manager']]

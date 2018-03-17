@@ -1,0 +1,3 @@
+parameters:
+    dev_encoder.path.directory.encode.sources: "%kernel.root_dir%/../FILES/sources"
+    dev_encoder.path.directory.encode.targets: "%kernel.root_dir%/../FILES/targets"

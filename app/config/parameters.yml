@@ -1,0 +1,6 @@
+# This file is auto-generated during the composer install
+parameters:
+    variablesCss:
+        dev-primary-color: '#387B72'
+        dev-encode-color: '#72647B'
+        dev-intermediate-color: '#FF7644'

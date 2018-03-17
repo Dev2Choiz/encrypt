@@ -1,0 +1,39 @@
+<div class="modal fade" id="securityLoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Login</h4>
+            </div>
+            <div id="loginModalBody" class="modal-body">
+
+                <div class="body">
+                    {{ form_start(form) }}
+                    <div>
+                        {{ form_widget(
+                            form._username, {'attr': {
+                                'placeholder': form._username.vars.label,
+                                'class': 'form-control'
+                            }}
+                        )}}
+                    </div>
+                    <div>
+                        {{ form_widget(
+                            form._password, {'attr': {
+                                'placeholder': form._password.vars.label,
+                                'class': 'form-control'
+                            }}
+                        )}}
+                    </div>
+                    {{ form_end(form) }}
+                    <div class="error alert alert-danger"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary bg-primary-color" id="SecurityBtnLogin">connecter</button>
+            </div>
+        </div>
+    </div>
+</div>

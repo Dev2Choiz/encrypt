@@ -1,0 +1,40 @@
+{% extends "@DevEncrypt/layout.html.twig" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts
+        '@DevEncryptBundle/Resources/js/Script/formManager.js'
+        '@DevEncryptBundle/Resources/js/Default/stream.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        "@DevEncryptBundle/Resources/css/Default/encryptForm.less"
+    %}
+    <link type="text/css" rel="stylesheet" media="all" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div id="wrapperUploadFile" class="col-md-offset-1 col-md-10 border-primary-color">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+                {{ form_widget(formTask.typeTaskList) }}
+            </div>
+        </div>
+
+        <div id="templateForm"></div>
+    </div>
+    <hr>
+    <div id="previewSize" class="bg-primary-color"></div>
+    <textarea id="previewResult" name="" cols="80" rows="15" class="border-primary-color"></textarea>
+{% endblock %}

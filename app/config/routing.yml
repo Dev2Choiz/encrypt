@@ -1,0 +1,16 @@
+dev_security:
+    resource: "@DevSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dev_cache_monitoring:
+    resource: "@DevCacheMonitoringBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dev_encrypt:
+    resource: "@DevEncryptBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dev_encoder:
+    resource: "@DevEncoderBundle/Resources/config/routing.yml"
+    prefix:   /
+

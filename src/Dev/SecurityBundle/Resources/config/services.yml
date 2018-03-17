@@ -1,0 +1,10 @@
+services:
+    dev_security.login_handler:
+        class: Dev\SecurityBundle\Service\LoginHandler
+        arguments: ["@router", "@session"]
+        public: false
+
+    dev_security.fixture.orm.load_user:
+        class: Dev\SecurityBundle\DataFixtures\ORM\LoadUser
+        calls:
+            - [setContainer, ['@service_container']]

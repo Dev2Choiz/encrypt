@@ -1,0 +1,17 @@
+<div class="form-group row">
+    <div class="col-sm-offset-2 col-md-8 no-padding">
+        {{ form_widget(form.text, {"attr" : {"class": "form-control", "rows": "12"}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-offset-2 col-xs-12 col-sm-3 no-padding">
+        {{ form_widget(form.currentBase, {"attr" : {"class": "form-control"}}) }}
+    </div>
+    <div class="col-xs-12 col-sm-2 no-padding text-center">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+    </div>
+    <div class="col-xs-12 col-sm-3 no-padding">
+        {{ form_widget(form.whishedBase, {"attr" : {"class": "form-control"}}) }}
+    </div>
+</div>

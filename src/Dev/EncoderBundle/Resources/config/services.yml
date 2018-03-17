@@ -1,0 +1,16 @@
+services:
+    dev_encoder.service.encrypt_manager:
+        class: Dev\EncoderBundle\Service\EncodeManager
+        calls:
+            - [setSvcContainer,   [ '@service_container'                            ]]
+            - [setEncodeProducer, [ '@dev_encrypt.service.rabbitmq.encode_producer' ]]
+            - [setPathSources,    [ '%dev_encoder.path.directory.encode.sources%'   ]]
+            - [setPathTargets,    [ '%dev_encoder.path.directory.encode.targets%'   ]]
+            - [setSvcRedis,       [ '@snc_redis.uploader'                           ]]
+            - [setSvcMemcached,   [ '@devcachemonitoring.adapter.memcached'          ]]
+            - [setLogger,         [ '@dev_encrypt.service.logger'                    ]]
+
+    dev_encoder.service.dependency_injection:
+        class: Dev\EncoderBundle\Service\DependencyInjection\DependencyInjection
+        calls:
+            - [setSvcContainer, [ '@service_container' ]]

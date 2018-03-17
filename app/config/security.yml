@@ -1,0 +1,45 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    encoders:
+        Dev\SecurityBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_RECRUE:         ROLE_RECRUE
+        ROLE_CAPORAL:      [ ROLE_RECRUE,  ROLE_CAPORAL                              ]
+        ROLE_MAJOR:        [ ROLE_RECRUE,  ROLE_MAJOR                                ]
+        ROLE_COMMANDANT:   [ ROLE_RECRUE,  ROLE_COMMANDANT                           ]
+        ROLE_COLONEL:      [ ROLE_RECRUE,  ROLE_CAPORAL, ROLE_MAJOR, ROLE_COMMANDANT ]
+        ROLE_GENERAL:      [ ROLE_COLONEL, ROLE_ALLOWED_TO_SWITCH                    ]
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        main:
+            entity:
+                class:    Dev\SecurityBundle\Entity\User
+                property: userName
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern:   ^/
+            anonymous: true
+            provider:  main
+            form_login:
+                login_path: login
+                check_path: login_check
+                success_handler: dev_security.login_handler
+                failure_handler: dev_security.login_handler
+            logout:
+                path:   logout
+                target: /
+
+    access_control:
+        #- { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^(.*)/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+

@@ -1,0 +1,45 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     '%rabbitmq_host%'
+            port:     5672
+            user:     '%rabbitmq_user%'
+            password: '%rabbitmq_pass%'
+            vhost:    '%rabbitmq_vhost%'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+
+            #requires php_sockets.dll
+            use_socket: true # default false
+        another:
+            # A different (unused) connection defined by an URL. One can omit all parts,
+            # except the scheme (amqp:). If both segment in the URL and a key value (see above)
+            # are given the value from the URL takes precedence.
+            # See https://www.rabbitmq.com/uri-spec.html on how to encode values.
+            url: 'amqp://encrypt:secret@localhost:5672/vhost?lazy=1&connection_timeout=6'
+
+    producers:
+        encrypt_client:
+            class:            Dev\EncryptBundle\Service\RabbitMQ\EncodeProducer
+            connection:       default
+            exchange_options: {name: 'encrypt', type: fanout}
+
+    consumers:
+        encrypt_worker:
+            connection:       default
+            exchange_options: {name: 'encrypt', type: fanout}
+            queue_options:    {name: 'encrypt_queue1'}
+            callback:         dev_encrypt.service.rabbitmq.encode_consumer
+
+#        encrypt_worker2:
+#            connection:       default
+#            exchange_options: {name: 'encrypt', type: fanout}
+#            queue_options:    {name: 'encrypt_queue2'}
+#            callback:         dev_encrypt.service.rabbitmq.encode_consumer

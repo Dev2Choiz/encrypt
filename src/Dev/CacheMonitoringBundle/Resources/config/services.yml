@@ -1,0 +1,28 @@
+services:
+
+    devCacheMonitoring.twigExtension.type:
+        class: Dev\CacheMonitoringBundle\Twig\Extension\TypeExtension
+        tags:
+            - { name: twig.extension }
+
+    devcachemonitoring.memcached:
+        class: \Memcached
+        calls:
+            - [addServer, ['%devCacheMonitoring.memcached.host%', '%devCacheMonitoring.memcached.port%']]
+
+#    devcachemonitoring.memcache:
+#        class: \Memcache
+#        calls:
+#            - [addServer, ['%devCacheMonitoring.memcache.host%', '%devCacheMonitoring.memcache.port%']]
+
+
+    devcachemonitoring.adapter.memcached:
+            class: Dev\CacheMonitoringBundle\Service\Adapter\AdapterMemcached
+            calls:
+                - [addServer, ['%devCacheMonitoring.memcached.host%', '%devCacheMonitoring.memcached.port%']]
+
+#    devcachemonitoring.adapter.memcache:
+#            class: Dev\CacheMonitoringBundle\Service\Adapter\AdapterMemcache
+#            calls:
+#                - [addServer, ['%devCacheMonitoring.memcached.host%', '%devCacheMonitoring.memcached.port%']]
+

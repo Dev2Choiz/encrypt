@@ -1,0 +1,24 @@
+{% block body %}
+
+
+    <div class="alert alert-danger">{{ form_errors(form) }}</div>
+
+
+    {{ form_start(form) }}
+        {{ form_label(form.firstName) }}
+        {{ form_widget(form.firstName) }}
+        {{ form_label(form.lastName) }}
+        {{ form_widget(form.lastName) }}
+        {{ form_label(form.userName) }}
+        {{ form_widget(form.userName) }}
+        {{ form_label(form.password) }}
+        {{ form_widget(form.password) }}
+        {{ form_label(form.passwordConfirmation) }}
+        {{ form_widget(form.passwordConfirmation) }}
+        {{ form_widget(form._token) }}
+
+
+        <br />
+        <input type="submit" value="inscription" />
+    {{ form_end(form) }}
+{% endblock %}
