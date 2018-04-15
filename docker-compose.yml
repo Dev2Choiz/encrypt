@@ -1,15 +1,22 @@
-version: '3'
+version: '3.4'
 
 networks:
   net_encrypt:
     driver: bridge
 
-services:
+secrets:
+  mysql_root_password:
+    file: ./docker/secrets/mysql/mysql_root_password
+  mysql_user:
+    file: ./docker/secrets/mysql/mysql_user
+  mysql_password:
+    file: ./docker/secrets/mysql/mysql_password
 
+services:
   container_encrypt:
     build:
       context: .
-      dockerfile: docker/encrypt/Dockerfile
+      dockerfile: ./docker/encrypt/Dockerfile
     ports:
       - "8080:80"
     volumes:
@@ -17,8 +24,8 @@ services:
     environment:
       CONTAINER_MYSQL_HOST: "container_mysql"
       CONTAINER_MYSQL_PORT: "3306"
-      CONTAINER_MYSQL_USER: "root"
-      CONTAINER_MYSQL_PASSWORD: "secret"
+      CONTAINER_MYSQL_USER: "/run/secrets/mysql_user"
+      CONTAINER_MYSQL_PASSWORD: "/run/secrets/mysql_root_password"
       # Memcached
       CONTAINER_MEMCACHED_HOST: "container_memcached"
       # Redis
@@ -30,7 +37,7 @@ services:
       CONTAINER_RABBITMQ_PASS: "secret"
       CONTAINER_RABBITMQ_VHOST: "encrypt"
       #xdebug
-      PHP_IDE_CONFIG: "serverName=192.168.0.42"
+      PHP_IDE_CONFIG: "serverName=192.168.0.26"
       XDEBUG_CONFIG: "remote_host=192.168.0.15 idekey=PHPSTORM"
     networks:
       - net_encrypt
@@ -39,19 +46,26 @@ services:
       - container_memcached
       - container_redis
       - container_rabbitmq
+    secrets:
+      - mysql_root_password
+      - mysql_user
 
   container_mysql:
     image: mysql
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_USER=encrypt
-      - MYSQL_PASSWORD=secret
+      MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/mysql_root_password"
+      MYSQL_USER_FILE: "/run/secrets/mysql_user"
+      MYSQL_PASSWORD_FILE: "/run/secrets/mysql_password"
     volumes:
-      - ./docker/mysql/etc:/docker-entrypoint-initdb.d
+      - ./docker/mysql/data:/var/lib/mysql
     networks:
       - net_encrypt
+    secrets:
+      - mysql_root_password
+      - mysql_user
+      - mysql_password
 
   container_memcached:
     image: memcached

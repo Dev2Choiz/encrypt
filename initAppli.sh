@@ -2,8 +2,8 @@
 
 echo "SUPPRESSION VENDOR CACHE COMPOSER.LOCK"
 docker-compose exec --user encrypt container_encrypt bash -c 'php -v'
-docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/composer.lock'
-docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/vendor'
+#docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/composer.lock'
+#docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/vendor'
 docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/var/cache'
 docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/var/logs'
 docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/var/sessions'
@@ -27,6 +27,7 @@ docker-compose exec  --user encrypt container_encrypt bash -c 'php /var/www/html
 #docker-compose exec  --user encrypt container_encrypt bash -c 'php /var/www/html/encrypt/bin/console rabbitmq:consumer -m 3 encrypt_worker'
 
 echo "SUPERVISOR : RABBITMQ"
+docker-compose exec --user encrypt container_encrypt bash -c 'rm -rf /var/www/html/encrypt/app/supervisor'
 docker-compose exec  --user encrypt container_encrypt bash -c 'php /var/www/html/encrypt/bin/console rabbitmq-supervisor:rebuild'
 
 exit 0

@@ -5,11 +5,8 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "": [
-              "src/",
-              "composer/"
-            ],
-            "Dev\\Composer\\": "composer/"
+            "": "src/",
+            "App\\Services\\": "app/Services/"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
